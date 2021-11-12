@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MVC_CORE3_E_Shopping.Models;
 
 namespace MVC_CORE3_E_Shopping.Infrastructure
 {
@@ -13,5 +10,7 @@ namespace MVC_CORE3_E_Shopping.Infrastructure
         {
 
         }
+
+        public DbSet<Page> Pages { get; set; }
     }
 }
