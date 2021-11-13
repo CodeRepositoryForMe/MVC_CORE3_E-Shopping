@@ -61,6 +61,7 @@ namespace MVC_CORE3_E_Shopping.Areas.Admin.Controllers
                 context.Add(page);
                 await context.SaveChangesAsync();
 
+                TempData["Success"] = "The page has been added !!";
                 return RedirectToAction("Index");
 
             }
