@@ -70,6 +70,40 @@ namespace MVC_CORE3_E_Shopping.Areas.Admin.Controllers
             return View(page);
         }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            Page page = await context.Pages.FindAsync(id);
+            if(page == null)
+            {
+                return NotFound();
+            }
+            return View(page);
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Page page)
+        {
+            if(ModelState.IsValid)
+            {
+                page.Slug = page.ID == 1 ? "home" : page.Title.ToLower().Replace(" ", "-");
+
+                var slug = await context.Pages.Where(x => x.ID != page.ID).FirstOrDefaultAsync(x => x.Slug == page.Slug);
+                if(slug != null)
+                {
+                    ModelState.AddModelError("", "The Title already exist.");
+                    return View(page);
+                }
+
+                context.Update(page);
+                await context.SaveChangesAsync();
+
+                TempData["Success"] = "The page has been updated !!!";
+
+                return RedirectToAction("Edit", page.ID);
+            }
+
+            return View(page);
+        }
     }
 }
