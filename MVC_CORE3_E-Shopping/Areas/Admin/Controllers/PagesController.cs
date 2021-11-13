@@ -19,6 +19,7 @@ namespace MVC_CORE3_E_Shopping.Areas.Admin.Controllers
             this.context = context;
         }
 
+        //GET / admin/pages
         public async Task<IActionResult> Index()
         {
             IQueryable<Page> pages = from p in context.Pages orderby p.Sorting select p;
@@ -27,5 +28,15 @@ namespace MVC_CORE3_E_Shopping.Areas.Admin.Controllers
 
             return View(pagesList);
         }
+
+        // GET /admin/pages/details/{id}
+        public async Task<IActionResult> Details(int id)
+        {
+            Page page = await context.Pages.FirstOrDefaultAsync(x => x.ID == id);
+            if (page == null)
+                return NotFound();
+            return View(page);
+        }
+
     }
 }
