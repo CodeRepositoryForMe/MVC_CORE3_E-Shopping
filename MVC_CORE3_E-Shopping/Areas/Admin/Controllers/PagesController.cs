@@ -43,6 +43,7 @@ namespace MVC_CORE3_E_Shopping.Areas.Admin.Controllers
 
         // POST /admin/page/create
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Page page)
         {
             if(ModelState.IsValid)
@@ -68,7 +69,6 @@ namespace MVC_CORE3_E_Shopping.Areas.Admin.Controllers
 
             return View(page);
         }
-
 
 
     }
