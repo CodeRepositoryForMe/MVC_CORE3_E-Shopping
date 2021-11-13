@@ -70,6 +70,7 @@ namespace MVC_CORE3_E_Shopping.Areas.Admin.Controllers
             return View(page);
         }
 
+        //GET /admin/pages/edit/{id}
         public async Task<IActionResult> Edit(int id)
         {
             Page page = await context.Pages.FindAsync(id);
@@ -80,6 +81,7 @@ namespace MVC_CORE3_E_Shopping.Areas.Admin.Controllers
             return View(page);
         }
 
+        // POST /admin/pages/edit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Page page)
@@ -104,6 +106,26 @@ namespace MVC_CORE3_E_Shopping.Areas.Admin.Controllers
             }
 
             return View(page);
+        }
+
+        // DELETE /admin/pages/delete/{id}
+        public async Task<IActionResult> Delete(int id)
+        {
+            Page page = await context.Pages.FindAsync(id);
+
+            if(page == null)
+            {
+                TempData["Error"] = "The page dose not exist";
+            }
+            else
+            {
+                context.Pages.Remove(page);
+                await context.SaveChangesAsync();
+
+                TempData["Success"] = "Page removed successfully";
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }
