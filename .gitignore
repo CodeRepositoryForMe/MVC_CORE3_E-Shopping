@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Added explicitly 
+# No Git update for lib level changes
+**/wwwroot/lib
