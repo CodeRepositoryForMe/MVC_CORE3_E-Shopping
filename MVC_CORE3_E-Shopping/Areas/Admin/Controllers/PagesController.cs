@@ -38,5 +38,37 @@ namespace MVC_CORE3_E_Shopping.Areas.Admin.Controllers
             return View(page);
         }
 
+        //Get /admin/pages/create
+        public IActionResult Create() => View();
+
+        // POST /admin/page/create
+        [HttpPost]
+        public async Task<IActionResult> Create(Page page)
+        {
+            if(ModelState.IsValid)
+            {
+                page.Slug = page.Title.ToLower().Replace(" ", "-");
+                page.Sorting = 100;
+
+                var existSlug = await context.Pages.FirstOrDefaultAsync(x => x.Slug == page.Slug);
+
+                if(existSlug != null)
+                {
+                    ModelState.AddModelError("", "The Title aready exist");
+                    return View(page);
+                }
+
+                context.Add(page);
+                await context.SaveChangesAsync();
+
+                return RedirectToAction("Index");
+
+            }
+
+            return View(page);
+        }
+
+
+
     }
 }
